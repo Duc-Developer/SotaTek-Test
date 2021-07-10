@@ -1,7 +1,12 @@
 import './App.css';
+import TodoList from './Features/TodoList';
 
 function App() {
-    return <div className="App">Hi we code test for Sota</div>;
+    return (
+        <div className="App">
+            <TodoList />
+        </div>
+    );
 }
 
 export default App;
