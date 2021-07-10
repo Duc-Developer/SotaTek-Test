@@ -5,16 +5,14 @@ import ListTaskComponent from './component';
 import BulkActions from './BulkActions';
 
 import TodoListServices from '../../../Services/TodoList';
+import { useEventListener } from '../../../Utilities/useHooks';
+import { EVENTS } from '../../../Utilities/Constants';
 
 export default function ListTaskContainer() {
     const [list, setList] = useState([]);
     const [searchString, setSearchString] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     let listIdChecked = useRef([]);
-
-    useEffect(() => {
-        fetchListTask();
-    }, [searchString]);
 
     const fetchListTask = async () => {
         setIsLoading(true);
@@ -26,6 +24,11 @@ export default function ListTaskContainer() {
             console.log(err);
         }
     };
+
+    useEffect(() => {
+        fetchListTask();
+    }, [searchString]);
+    useEventListener(EVENTS.REFRESH_TODO_LIST, fetchListTask);
 
     const handleChangeSearch = (event) => {
         setSearchString(event.target.value);
