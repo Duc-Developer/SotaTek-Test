@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 export const useEventListener = (eventName, handler, element = window) => {
     const savedHandler = useRef();
@@ -22,8 +22,23 @@ export const useDispatchEvent = (eventName, element = window) => {
     return [event, dispatchEvent];
 };
 
+export const useDebounce = (value, delay = 350) => {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedValue(value);
+        }, delay);
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [value, delay]);
+    return debouncedValue;
+};
+
 const useHooks = {
     useEventListener,
+    useDispatchEvent,
+    useDebounce,
 };
 
 export default useHooks;

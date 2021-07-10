@@ -8,6 +8,7 @@ import TodoListServices from '../../../Services/TodoList';
 import {
     useEventListener,
     useDispatchEvent,
+    useDebounce,
 } from '../../../Utilities/useHooks';
 import { EVENTS } from '../../../Utilities/Constants';
 
@@ -16,6 +17,7 @@ export default function ListTaskContainer() {
     const [list, setList] = useState([]);
     const [searchString, setSearchString] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const debouncedSearchString = useDebounce(searchString);
     let listIdChecked = useRef([]);
 
     const fetchListTask = async () => {
@@ -31,7 +33,7 @@ export default function ListTaskContainer() {
 
     useEffect(() => {
         fetchListTask();
-    }, [searchString]);
+    }, [debouncedSearchString]);
     useEventListener(EVENTS.REFRESH_TODO_LIST, fetchListTask);
 
     const handleChangeSearch = (event) => {
