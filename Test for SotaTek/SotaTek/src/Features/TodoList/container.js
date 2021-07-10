@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import TodoListComponent from './component';
 import TodoListServices from '../../Services/TodoList';

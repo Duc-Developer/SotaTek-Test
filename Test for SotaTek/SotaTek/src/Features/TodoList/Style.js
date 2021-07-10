@@ -10,6 +10,10 @@ const useStyles = makeStyles((theme) => ({
         paddingRight: theme.spacing(4),
         paddingBottom: theme.spacing(2),
     },
+    list: {
+        paddingTop: theme.spacing(2),
+        borderLeft: '1px solid #000000',
+    },
 }));
 
 export default useStyles;

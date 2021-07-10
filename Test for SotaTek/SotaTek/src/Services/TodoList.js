@@ -2,10 +2,16 @@ import ids from 'short-id';
 
 const getTodoList = () => {
     return new Promise((resolve, reject) => {
+        const storage = localStorage.getItem('todoList');
+        let todoList = !storage ? [] : JSON.parse(storage);
+        todoList =
+            todoList.length > 1 ? sortTodoListByDate(todoList) : todoList;
         setTimeout(() => {
             resolve({
                 status: 200,
-                data: [],
+                data: {
+                    data: todoList,
+                },
             });
         }, 300);
     });
@@ -16,9 +22,9 @@ const createOrEditTask = (task) => {
         const storage = localStorage.getItem('todoList');
         let todoList = !storage ? [] : JSON.parse(storage);
         if (!task.id) {
-            createNewTask(task, todoList);
+            todoList = createNewTask(task, todoList);
         } else {
-            updateTask(task, todoList);
+            todoList = updateTask(task, todoList);
         }
         localStorage.setItem('todoList', JSON.stringify(todoList));
         setTimeout(() => {
@@ -30,17 +36,44 @@ const createOrEditTask = (task) => {
     });
 };
 
+const deleteTaskWithId = (listId) => {
+    return new Promise((resolve, reject) => {
+        const storage = localStorage.getItem('todoList');
+        let todoList = JSON.parse(storage);
+        todoList = todoList.filter((item) => listId.indexOf(item.id) === -1);
+
+        localStorage.setItem('todoList', JSON.stringify(todoList));
+        setTimeout(() => {
+            resolve({
+                status: 200,
+                data: null,
+            });
+        }, 300);
+    });
+};
+
+function sortTodoListByDate(todoList) {
+    return todoList.sort((x, y) => {
+        const dueDateX = new Date(x.dueDate);
+        const dueDateY = new Date(y.dueDate);
+        return dueDateX.getTime() - dueDateY.getTime();
+    });
+}
+
 function createNewTask(task, todoList) {
     const todoId = ids.generate('ID');
-    todoList.push({
-        id: todoId,
-        ...task,
-    });
+    return [
+        ...todoList,
+        {
+            id: todoId,
+            ...task,
+        },
+    ];
 }
 
 function updateTask(task, todoList) {
     let match = todoList.findIndex((item) => item.id === task.id);
-    todoList = [
+    return [
         ...todoList.slice(0, match),
         { ...task },
         ...todoList.slice(match + 1),
@@ -50,6 +83,7 @@ function updateTask(task, todoList) {
 const TodoListServices = {
     getTodoList,
     createOrEditTask,
+    deleteTaskWithId,
 };
 
 export default TodoListServices;

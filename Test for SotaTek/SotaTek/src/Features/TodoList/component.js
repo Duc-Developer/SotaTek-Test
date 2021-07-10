@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Create from './Create';
+import ListTask from './ListTask';
 import Grid from '@material-ui/core/Grid';
 
 import useStyles from './Style';
@@ -13,7 +14,7 @@ function TodoListComponent({ handleCreate }) {
                 <Create handleSubmit={handleCreate} />
             </Grid>
             <Grid className={classes.list} item xs={12} md={6}>
-                here is list
+                <ListTask />
             </Grid>
         </Grid>
     );
