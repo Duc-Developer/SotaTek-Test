@@ -24,7 +24,7 @@ function LisTaskComponent({
                     onChange={handleChangeSearch}
                 />
                 {isLoading ? (
-                    <div>...fetching</div>
+                    <div style={{ textAlign: 'center' }}>...fetching</div>
                 ) : list.length > 0 ? (
                     list.map((item) => (
                         <Task
@@ -34,7 +34,7 @@ function LisTaskComponent({
                         />
                     ))
                 ) : (
-                    <div>No Data</div>
+                    <div style={{ textAlign: 'center' }}>No Data</div>
                 )}
             </div>
         </div>
