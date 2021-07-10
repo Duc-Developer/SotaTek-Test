@@ -7,6 +7,9 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 
+import { ALERT_TYPES, EVENTS } from '../../Utilities/Constants';
+import { useEventListener } from '../../Utilities/useHooks';
+
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -18,13 +21,16 @@ const useStyles = makeStyles((theme) => ({
             marginTop: theme.spacing(2),
         },
     },
+    alert: {
+        minWidth: '200px',
+    },
 }));
 
-export default function Snackbar({ type }) {
+export default function SnackbarAdvance({ type }) {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
 
-    const handleClick = () => {
+    const handleAlert = () => {
         setOpen(true);
     };
 
@@ -33,25 +39,35 @@ export default function Snackbar({ type }) {
             setOpen(false);
         }
     };
-
+    useEventListener(EVENTS.SUCCESS, handleAlert);
     return (
         <div className={classes.root}>
-            <Button variant="outlined" onClick={handleClick}>
-                Open success snackbar
-            </Button>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                <Alert onClose={handleClose} severity={type}>
-                    This is a success message!
+                <Alert className={classes.alert} severity={type}>
+                    {generateMessage(type)}
                 </Alert>
             </Snackbar>
         </div>
     );
 }
 
-Snackbar.propTypes = {
-    type: PropTypes.oneOf(['success', 'error', 'info', 'warning']),
+function generateMessage(type) {
+    switch (type) {
+        case ALERT_TYPES.SUCCESS:
+            return 'Successful!';
+        case ALERT_TYPES.ERROR:
+            return 'Something was wrong!';
+        case ALERT_TYPES.WARNING:
+            return 'Warning!';
+        default:
+            return 'Errors';
+    }
+}
+
+SnackbarAdvance.propTypes = {
+    type: PropTypes.oneOf(Object.values(ALERT_TYPES)),
 };
 
-Snackbar.defaultProps = {
+SnackbarAdvance.defaultProps = {
     type: 'success',
 };

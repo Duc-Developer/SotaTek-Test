@@ -9,6 +9,8 @@ function LisTaskComponent({
     handleChangeSearch,
     isLoading,
     listIdChecked,
+    handleRemoveTask,
+    handleUpdateTask,
 }) {
     return (
         <div style={{ marginBottom: '96px' }}>
@@ -31,6 +33,8 @@ function LisTaskComponent({
                             key={item.id}
                             item={item}
                             listIdChecked={listIdChecked}
+                            handleRemove={handleRemoveTask}
+                            handleUpdate={handleUpdateTask}
                         />
                     ))
                 ) : (

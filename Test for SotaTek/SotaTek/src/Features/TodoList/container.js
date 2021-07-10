@@ -9,13 +9,17 @@ function TodoListContainer() {
     const [evRefreshTodoList, dispatchEventRefreshTodoList] = useDispatchEvent(
         EVENTS.REFRESH_TODO_LIST
     );
+    const [evSuccess, dispatchEventSuccess] = useDispatchEvent(EVENTS.SUCCESS);
     const handleCreate = (formData) => {
         createNewTask(formData);
     };
     const createNewTask = async (task) => {
         try {
             const response = await TodoListServices.createOrEditTask(task);
-            dispatchEventRefreshTodoList(evRefreshTodoList);
+            if (response.status === 200) {
+                dispatchEventSuccess(evSuccess);
+                dispatchEventRefreshTodoList(evRefreshTodoList);
+            }
         } catch (err) {
             console.log(err);
         }
