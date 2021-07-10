@@ -1,8 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
 import Task from './Task';
 import TextField from '@material-ui/core/TextField';
-
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 function LisTaskComponent({
     list,
     searchString,
@@ -12,10 +12,16 @@ function LisTaskComponent({
     handleRemoveTask,
     handleUpdateTask,
 }) {
+    const mobileMatched = useMediaQuery('(max-width: 768px)');
     return (
         <div style={{ marginBottom: '96px' }}>
             <h3 style={{ textAlign: 'center' }}>Todo List</h3>
-            <div style={{ paddingLeft: '36px', paddingRight: '36px' }}>
+            <div
+                style={{
+                    paddingLeft: mobileMatched ? '16px' : '36px',
+                    paddingRight: mobileMatched ? '16px' : '36px',
+                }}
+            >
                 <TextField
                     variant="outlined"
                     fullWidth

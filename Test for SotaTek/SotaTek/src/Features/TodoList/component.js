@@ -1,4 +1,5 @@
 import React from 'react';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import Create from './Create';
 import ListTask from './ListTask';
@@ -9,13 +10,33 @@ import useStyles from './Style';
 
 function TodoListComponent({ handleCreate }) {
     const classes = useStyles();
+    const mobileMatched = useMediaQuery('(max-width: 768px)');
     return (
         <>
-            <Grid className={classes.root} container>
-                <Grid className={classes.create} item xs={12} md={6}>
+            <Grid
+                className={`${
+                    !mobileMatched ? classes.root : classes.rootMobile
+                }`}
+                container
+            >
+                <Grid
+                    className={`${
+                        !mobileMatched ? classes.create : classes.createMobile
+                    }`}
+                    item
+                    xs={12}
+                    md={6}
+                >
                     <Create handleSubmit={handleCreate} />
                 </Grid>
-                <Grid className={classes.list} item xs={12} md={6}>
+                <Grid
+                    className={`${
+                        !mobileMatched ? classes.list : classes.listMobile
+                    }`}
+                    item
+                    xs={12}
+                    md={6}
+                >
                     <ListTask />
                 </Grid>
             </Grid>
