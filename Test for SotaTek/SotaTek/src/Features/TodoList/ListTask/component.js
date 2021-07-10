@@ -11,7 +11,7 @@ function LisTaskComponent({
     listIdChecked,
 }) {
     return (
-        <div>
+        <div style={{ marginBottom: '96px' }}>
             <h3 style={{ textAlign: 'center' }}>Todo List</h3>
             <div style={{ paddingLeft: '36px', paddingRight: '36px' }}>
                 <TextField
@@ -23,13 +23,19 @@ function LisTaskComponent({
                     value={searchString}
                     onChange={handleChangeSearch}
                 />
-                {list.map((item) => (
-                    <Task
-                        key={item.id}
-                        item={item}
-                        listIdChecked={listIdChecked}
-                    />
-                ))}
+                {isLoading ? (
+                    <div>...fetching</div>
+                ) : list.length > 0 ? (
+                    list.map((item) => (
+                        <Task
+                            key={item.id}
+                            item={item}
+                            listIdChecked={listIdChecked}
+                        />
+                    ))
+                ) : (
+                    <div>No Data</div>
+                )}
             </div>
         </div>
     );

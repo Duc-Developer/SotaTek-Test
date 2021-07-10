@@ -19,7 +19,7 @@ export default function ListTaskContainer() {
     const fetchListTask = async () => {
         setIsLoading(true);
         try {
-            const response = await TodoListServices.getTodoList();
+            const response = await TodoListServices.getTodoList(searchString);
             setList(response.data.data);
             setIsLoading(false);
         } catch (err) {
@@ -27,8 +27,8 @@ export default function ListTaskContainer() {
         }
     };
 
-    const handleChangeSearch = (text) => {
-        setSearchString(text);
+    const handleChangeSearch = (event) => {
+        setSearchString(event.target.value);
     };
 
     const handleRemoveListChecked = async () => {

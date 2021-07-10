@@ -1,11 +1,19 @@
 import ids from 'short-id';
+import HELPERS from '../Utilities/Helpers';
 
-const getTodoList = () => {
+const getTodoList = (searchString) => {
     return new Promise((resolve, reject) => {
         const storage = localStorage.getItem('todoList');
         let todoList = !storage ? [] : JSON.parse(storage);
-        todoList =
-            todoList.length > 1 ? sortTodoListByDate(todoList) : todoList;
+        if (todoList.length > 1) {
+            todoList = todoList.filter((item) => {
+                const itemTitle = HELPERS.changeToEnglishLowerCase(item.title);
+                const searchText =
+                    HELPERS.changeToEnglishLowerCase(searchString);
+                return itemTitle.indexOf(searchText) !== -1;
+            });
+            todoList = sortTodoListByDate(todoList);
+        }
         setTimeout(() => {
             resolve({
                 status: 200,
@@ -40,8 +48,11 @@ const deleteTaskWithId = (listId) => {
     return new Promise((resolve, reject) => {
         const storage = localStorage.getItem('todoList');
         let todoList = JSON.parse(storage);
-        todoList = todoList.filter((item) => listId.indexOf(item.id) === -1);
-
+        if (listId.length > 0) {
+            todoList = todoList.filter(
+                (item) => listId.indexOf(item.id) === -1
+            );
+        }
         localStorage.setItem('todoList', JSON.stringify(todoList));
         setTimeout(() => {
             resolve({

@@ -12,9 +12,20 @@ const validateWithoutFullWhiteSpace = (string) => {
     return string !== undefined && string !== '' && !stringIsFullWhiteSpace;
 };
 
+const changeToEnglishLowerCase = (string) => {
+    return string
+        .trim()
+        .normalize('NFD')
+        .toLowerCase()
+        .replace(/\s\s+/g, ' ')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/đ/g, 'd');
+};
+
 const HELPERS = {
     convertDateToStringFormat,
     validateWithoutFullWhiteSpace,
+    changeToEnglishLowerCase,
 };
 
 export default HELPERS;
