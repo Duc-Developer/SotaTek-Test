@@ -2,10 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import TodoListComponent from './component';
+import TodoListServices from '../../Services/TodoList';
 
-function TodoListContainer(props) {
+function TodoListContainer() {
     const handleCreate = (formData) => {
-        console.log(formData, 'handleCreate');
+        createNewTask(formData);
+    };
+    const createNewTask = async (task) => {
+        try {
+            const response = await TodoListServices.createOrEditTask(task);
+        } catch (err) {
+            console.log(err);
+        }
     };
     return <TodoListComponent handleCreate={handleCreate} />;
 }

@@ -6,7 +6,6 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
 
 import useStyles from './Style';
@@ -71,7 +70,7 @@ function AddOrEditTask({
                     fullWidth
                 />
             </Grid>
-            <Grid className={classes.rowStyled} item xs={12} md={6}>
+            <Grid className={classes.rowStyled} item xs={12} sm={6}>
                 <label>Due Date</label>
                 <TextField
                     size="small"
@@ -83,7 +82,7 @@ function AddOrEditTask({
                     fullWidth
                 />
             </Grid>
-            <Grid className={classes.rowStyled} item xs={12} md={6}>
+            <Grid className={classes.rowStyled} item xs={12} sm={6}>
                 <FormControl variant="outlined" size="small" fullWidth>
                     <label>Priority</label>
                     <Select
