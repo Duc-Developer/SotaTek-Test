@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useRef } from 'react';
 
 import ListTaskComponent from './component';
 import BulkActions from './BulkActions';
@@ -17,8 +16,7 @@ export default function ListTaskContainer() {
     const [list, setList] = useState([]);
     const [searchString, setSearchString] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const debouncedSearchString = useDebounce(searchString);
-    let listIdChecked = useRef([]);
+    const [checkedList, setCheckedList] = useState([]);
 
     const fetchListTask = async () => {
         setIsLoading(true);
@@ -31,6 +29,7 @@ export default function ListTaskContainer() {
         }
     };
 
+    const debouncedSearchString = useDebounce(searchString);
     useEffect(() => {
         fetchListTask();
     }, [debouncedSearchString]);
@@ -43,14 +42,15 @@ export default function ListTaskContainer() {
     const handleRemoveListChecked = async () => {
         try {
             const response = await TodoListServices.deleteTaskWithId(
-                listIdChecked.current
+                checkedList
             );
             if (response.status === 200) {
                 const newList = list.filter(
-                    (item) => listIdChecked.current.indexOf(item.id) === -1
+                    (item) => checkedList.indexOf(item.id) === -1
                 );
                 setList(newList);
-                listIdChecked.current = [];
+                setCheckedList([]);
+                dispatchEventSuccess(evSuccess);
             }
         } catch (err) {
             console.log(err);
@@ -80,11 +80,24 @@ export default function ListTaskContainer() {
             const response = await TodoListServices.deleteTaskWithId([taskId]);
             if (response.status === 200) {
                 const newList = list.filter((item) => item.id !== taskId);
+                const newCheckedList = checkedList.filter(
+                    (id) => id !== taskId
+                );
+                setCheckedList(newCheckedList);
                 setList(newList);
                 dispatchEventSuccess(evSuccess);
             }
         } catch (err) {
             console.log(err);
+        }
+    };
+
+    const handleCheckOrUnCheckTask = (taskId, status) => {
+        if (status) {
+            setCheckedList([...checkedList, taskId]);
+        } else {
+            const newCheckedList = checkedList.filter((id) => id !== taskId);
+            setCheckedList(newCheckedList);
         }
     };
     return (
@@ -96,9 +109,16 @@ export default function ListTaskContainer() {
                 handleChangeSearch={handleChangeSearch}
                 handleRemoveTask={handleRemoveTask}
                 handleUpdateTask={handleUpdateTask}
-                listIdChecked={listIdChecked.current}
+                handleCheckOrUnCheck={handleCheckOrUnCheckTask}
             />
-            <BulkActions handleRemove={handleRemoveListChecked} />
+            {checkedList.length > 0 && (
+                <BulkActions
+                    handleRemove={handleRemoveListChecked}
+                    handleDone={() => {
+                        alert('Action is Ignore!');
+                    }}
+                />
+            )}
         </>
     );
 }
