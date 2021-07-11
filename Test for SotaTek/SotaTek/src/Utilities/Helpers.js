@@ -15,7 +15,6 @@ const validateWithoutFullWhiteSpace = (string) => {
 const changeToEnglishLowerCase = (string) => {
     return string
         .trim()
-        .normalize('NFD')
         .toLowerCase()
         .replace(/\s\s+/g, ' ')
         .replace(/[\u0300-\u036f]/g, '')
