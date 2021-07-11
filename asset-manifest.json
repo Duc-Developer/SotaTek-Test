@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/SotaTek-Test/static/css/main.5d0c1e78.chunk.css",
-    "main.js": "/SotaTek-Test/static/js/main.2b8045f8.chunk.js",
-    "main.js.map": "/SotaTek-Test/static/js/main.2b8045f8.chunk.js.map",
+    "main.js": "/SotaTek-Test/static/js/main.ab10991b.chunk.js",
+    "main.js.map": "/SotaTek-Test/static/js/main.ab10991b.chunk.js.map",
     "runtime-main.js": "/SotaTek-Test/static/js/runtime-main.0efe6d0d.js",
     "runtime-main.js.map": "/SotaTek-Test/static/js/runtime-main.0efe6d0d.js.map",
     "static/js/2.16b3c07c.chunk.js": "/SotaTek-Test/static/js/2.16b3c07c.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.0efe6d0d.js",
     "static/js/2.16b3c07c.chunk.js",
     "static/css/main.5d0c1e78.chunk.css",
-    "static/js/main.2b8045f8.chunk.js"
+    "static/js/main.ab10991b.chunk.js"
   ]
 }
