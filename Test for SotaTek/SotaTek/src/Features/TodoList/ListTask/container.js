@@ -112,7 +112,12 @@ export default function ListTaskContainer() {
                 handleCheckOrUnCheck={handleCheckOrUnCheckTask}
             />
             {checkedList.length > 0 && (
-                <BulkActions handleRemove={handleRemoveListChecked} />
+                <BulkActions
+                    handleRemove={handleRemoveListChecked}
+                    handleDone={() => {
+                        alert('Action is Ignore!');
+                    }}
+                />
             )}
         </>
     );
