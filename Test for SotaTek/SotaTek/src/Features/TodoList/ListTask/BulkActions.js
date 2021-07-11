@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 
 import Typography from '@material-ui/core/Typography';
 import ButtonActions from '../../../Components/ButtonActions';
@@ -43,3 +44,8 @@ export default function BulkActions({ handleDone, handleRemove }) {
         </div>
     );
 }
+
+BulkActions.propTypes = {
+    handleDone: PropTypes.func,
+    handleRemove: PropTypes.func,
+};

@@ -8,9 +8,9 @@ function LisTaskComponent({
     searchString,
     handleChangeSearch,
     isLoading,
-    listIdChecked,
     handleRemoveTask,
     handleUpdateTask,
+    handleCheckOrUnCheck,
 }) {
     const mobileMatched = useMediaQuery('(max-width: 768px)');
     return (
@@ -38,9 +38,9 @@ function LisTaskComponent({
                         <Task
                             key={item.id}
                             item={item}
-                            listIdChecked={listIdChecked}
                             handleRemove={handleRemoveTask}
                             handleUpdate={handleUpdateTask}
+                            handleCheckOrUnCheck={handleCheckOrUnCheck}
                         />
                     ))
                 ) : (

@@ -32,20 +32,18 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function TaskComponent({ item, listIdChecked, handleRemove, handleUpdate }) {
+function TaskComponent({
+    item,
+    handleRemove,
+    handleUpdate,
+    handleCheckOrUnCheck,
+}) {
     const [open, setOpen] = useState(false);
     const [checked, setChecked] = useState(false);
 
     const handleChange = (event) => {
         const newStatus = event.target.checked;
-        if (newStatus) {
-            listIdChecked.push(item.id);
-        } else {
-            const match = listIdChecked.findIndex(
-                (idChecked) => idChecked === item.id
-            );
-            listIdChecked.splice(match, 1);
-        }
+        handleCheckOrUnCheck(item.id, newStatus);
         setChecked(newStatus);
     };
 
@@ -89,6 +87,11 @@ function TaskComponent({ item, listIdChecked, handleRemove, handleUpdate }) {
     );
 }
 
-TaskComponent.propTypes = {};
+TaskComponent.propTypes = {
+    item: PropTypes.object,
+    handleRemove: PropTypes.func,
+    handleUpdate: PropTypes.func,
+    handleCheckOrUnCheck: PropTypes.func,
+};
 
 export default TaskComponent;
